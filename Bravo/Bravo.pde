@@ -5,6 +5,7 @@ Hexagon star1;
 Hexagon star2;
 Hexagon star3;
 Hexagon star4;
+Music cheers = new Music();
 
 // TODO: Add game behavior
 
@@ -31,6 +32,8 @@ void setup() {
   star2 = createStar(30, 100, color(125));
   star3 = createStar(30, 100, color(125));
   star4 = createStar(30, 100, color(125));
+  cheers.load("cheers.mp3");
+  cheers.play();
 }
 
 void draw() {
