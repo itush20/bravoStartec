@@ -6,6 +6,8 @@ Hexagon star2;
 Hexagon star3;
 Hexagon star4;
 
+// TODO: Add game behavior
+
 void setup() {
   size(1024, 512);
   bg.setImage("bg_theater.png");
