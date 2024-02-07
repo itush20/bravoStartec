@@ -1,7 +1,7 @@
 // obgect setup
 Image bg = new Image();
-Image actor = new Image();
 Image rose = new Image();
+Image actor = new Image();
 Hexagon star1;
 Hexagon star2;
 Hexagon star3;
@@ -12,15 +12,15 @@ Music cheers = new Music();
 int roseSpacing = 0;
 
 // TODO: Add game behavior
-// Fix rose
 
 void setup() {
   size(1024, 512);
   bg.setImage("bg_theater.png");
+  rose.setImage("rose.png");
   actor.setImage("actor.png");
   bg.width = width;
   bg.height = height;
-  roseSpacing = 50;
+  roseSpacing = 1;
   
   actor.x = 300;
   actor.y = 200;
@@ -41,6 +41,7 @@ void draw() {
   }
   bg.draw();
   rose.draw();
+
   actor.draw();
   star1.draw();
   star2.draw();
