@@ -1,6 +1,9 @@
 // obgect setup
 Image bg = new Image();
 Image rose = new Image();
+
+ArrayList<Image> roses = new ArrayList<Image>();
+
 Image actor = new Image();
 Hexagon star1;
 Hexagon star2;
@@ -20,7 +23,7 @@ void setup() {
   actor.setImage("actor.png");
   bg.width = width;
   bg.height = height;
-  roseSpacing = 1;
+  roseSpacing = 50;
   
   actor.x = 300;
   actor.y = 200;
@@ -37,10 +40,15 @@ void setup() {
 
 void draw() {
   if (frameCount%roseSpacing == 0) {
-    rose = RoseGenerator();
+    if (roses.size() == 10) {
+      roses.clear();
+    }
+    roses.add(RoseGenerator());
   }
   bg.draw();
-  rose.draw();
+  for (Image rose : roses){
+    rose.draw();
+  }
 
   actor.draw();
   star1.draw();
