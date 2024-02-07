@@ -1,27 +1,26 @@
+// obgect setup
 Image bg = new Image();
-Image rose = new Image();
 Image actor = new Image();
+Image rose = new Image();
 Hexagon star1;
 Hexagon star2;
 Hexagon star3;
 Hexagon star4;
 Music cheers = new Music();
 
+// parameter setup
+int roseSpacing = 0;
+
 // TODO: Add game behavior
+// Fix rose
 
 void setup() {
   size(1024, 512);
   bg.setImage("bg_theater.png");
-  rose.setImage("rose.png");
   actor.setImage("actor.png");
   bg.width = width;
   bg.height = height;
-  
-  rose.x = 300;
-  rose.y = 20;
-  rose.width = 150;
-  rose.height = 100;
-  rose.rotation = 90;
+  roseSpacing = 50;
   
   actor.x = 300;
   actor.y = 200;
@@ -37,6 +36,9 @@ void setup() {
 }
 
 void draw() {
+  if (frameCount%roseSpacing == 0) {
+    rose = RoseGenerator();
+  }
   bg.draw();
   rose.draw();
   actor.draw();
@@ -45,6 +47,21 @@ void draw() {
   star3.draw();
   star4.draw();
 }
+
+Image RoseGenerator() {
+  int roseY = -50;
+  int roseX = int(random(624)) + 200;
+  Image rose = new Image();
+  rose.setImage("rose.png");
+  rose.y = roseY;
+  rose.x = roseX;
+  rose.width = 150;
+  rose.height = 100;
+  rose.speed = 5;
+  rose.direction = Direction.DOWN;
+  rose.rotation = 90;
+  return rose;
+} 
 
 Hexagon createStar(int x, int y, color brush) {
   Hexagon s = new Hexagon();
