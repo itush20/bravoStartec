@@ -5,6 +5,7 @@ Image rose = new Image();
 ArrayList<Image> roses = new ArrayList<Image>();
 Hexagon[] stars = new Hexagon[4];
 
+SplashScreen screen = new SplashScreen();
 
 Image actor = new Image();
 
@@ -21,10 +22,10 @@ float roseCaught_score = 0.5;
 void setup() {
   size(1024, 512);
   
-  bg.setImage("bg_theater.png");
   rose.setImage("rose.png");
   actor.setImage("actor.png");
   
+  bg.setImage("bg_theater.png");
   bg.width = width;
   bg.height = height;
   
@@ -40,7 +41,7 @@ void setup() {
   stars[2] = createStar(30, 160, color(125));
   stars[3] = createStar(30, 190, color(125));
   cheers.load("cheers.mp3");
-  cheers.play();
+  //cheers.play();
   
   winText.brush = color(255);
   //winText.alpha = 0;
@@ -49,9 +50,23 @@ void setup() {
   winText.y = height / 2;
   winText.font = "Consolas";
   winText.textSize = 38;
+  
+  screen.introMusic = cheers;
+  screen.image = "bg_theater.png";
+  screen.gameName = "bravo!";
+  screen.gameAuthor1 = "Itamar And Shahar";
+  screen.gameAuthor2 = "";
+  screen.gameAuthor3 = "";
+  
 }
 
 void draw() {
+  if (frameCount < 1000)
+  {
+    screen.show();
+    return;
+  }
+ 
   bg.draw();
 
   if (score >= 4.0F) {
