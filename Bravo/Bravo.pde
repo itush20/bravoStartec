@@ -3,26 +3,31 @@ Image bg = new Image();
 Image rose = new Image();
 
 ArrayList<Image> roses = new ArrayList<Image>();
+Hexagon[] stars = new Hexagon[4];
+
 
 Image actor = new Image();
-Hexagon star1;
-Hexagon star2;
-Hexagon star3;
-Hexagon star4;
+
+Text winText = new Text();
+
 Music cheers = new Music();
 
 // parameter setup
 int roseSpacing = 0;
-
+float score = 0;
+float roseCaught_score = 0.5;
 // TODO: Add game behavior
 
 void setup() {
   size(1024, 512);
+  
   bg.setImage("bg_theater.png");
   rose.setImage("rose.png");
   actor.setImage("actor.png");
+  
   bg.width = width;
   bg.height = height;
+  
   roseSpacing = 50;
   
   actor.x = 300;
@@ -30,31 +35,65 @@ void setup() {
   actor.width = 200;
   actor.height = 150;
   
-  star1 = createStar(30, 100, color(125));
-  star2 = createStar(30, 100, color(125));
-  star3 = createStar(30, 100, color(125));
-  star4 = createStar(30, 100, color(125));
+  stars[0] = createStar(30, 100, color(125));
+  stars[1] = createStar(30, 130, color(125));
+  stars[2] = createStar(30, 160, color(125));
+  stars[3] = createStar(30, 190, color(125));
   cheers.load("cheers.mp3");
   cheers.play();
+  
+  winText.brush = color(255);
+  //winText.alpha = 0;
+  winText.text = "You Won!\nCongradulations!\n ~By Shahar & Itamar";
+  winText.x = width / 2 - 100;
+  winText.y = height / 2;
+  winText.font = "Consolas";
+  winText.textSize = 38;
 }
 
 void draw() {
+  bg.draw();
+
+  if (score >= 4.0F) {
+    //winText.alpha = 255;
+    winText.draw();
+    return;
+  }
+  
   if (frameCount%roseSpacing == 0) {
     if (roses.size() == 10) {
       roses.clear();
     }
     roses.add(RoseGenerator());
   }
-  bg.draw();
-  for (Image rose : roses){
+  
+  
+  for (int i = 0; i < roses.size(); i++) {
+    Image rose = roses.get(i);
+    if (actor.pointInShape(rose.x, rose.y)) {
+      roses.remove(i);
+      
+      score += roseCaught_score;
+      
+      stars[int(score-1)].brush = color(255,255, 0);
+    }
+    
     rose.draw();
   }
-
+  
   actor.draw();
-  star1.draw();
-  star2.draw();
-  star3.draw();
-  star4.draw();
+  
+  for (Hexagon star : stars) {
+    star.draw();
+  }
+}
+
+void mouseMoved() {
+  actor.x = mouseX - 75;
+}
+
+void mouseDragged(){
+  mouseMoved();
 }
 
 Image RoseGenerator() {
