@@ -2,11 +2,16 @@
 Bravo by Shahar and Itamar
  
 TODOS:
- * Add difficulties.
+ * Improve difficulty button
+ * Implement the difficulty changer.
  */
+
+import javax.swing.JOptionPane; // Message boxes: https://docs.oracle.com/javase%2F7%2Fdocs%2Fapi%2F%2F/javax/swing/JOptionPane.html#showOptionDialog(java.awt.Component,%20java.lang.Object,%20java.lang.String,%20int,%20int,%20javax.swing.Icon,%20java.lang.Object[],%20java.lang.Object)
+
 
 // object setup
 Rect startButton = new Rect();
+Rect advancedDifficultyButton = new Rect();
 Image bg = new Image();
 Image rose = new Image();
 ArrayList<Image> roses = new ArrayList<Image>();
@@ -16,6 +21,7 @@ Image actor = new Image();
 Text winText = new Text();
 Text loseText = new Text();
 Text startText = new Text();
+Text difficultyText = new Text();
 Music cheers = new Music();
 
 PImage background;
@@ -32,6 +38,7 @@ float score = 0;
 
 void setup() {
   size(1024, 512);
+  
   rose.setImage("rose.png");
   actor.setImage("actor.png");
 
@@ -47,6 +54,12 @@ void setup() {
   startButton.brush = color(255, 0, 0);
   startButton.pen = color(255);
   startButton.penThickness = 3;
+  
+  advancedDifficultyButton.height = 30;
+  advancedDifficultyButton.width = 80;
+  advancedDifficultyButton.brush = color(255, 0, 0);
+  advancedDifficultyButton.pen = color(255);
+  advancedDifficultyButton.penThickness = 3;
 
 
   // actor setup
@@ -85,6 +98,13 @@ void setup() {
   startText.y = 273;
   startText.font = "Roboto";
   startText.textSize = 24;
+  
+  difficultyText.brush = color(255);
+  difficultyText.text = "Hard?";
+  difficultyText.x = 345;
+  difficultyText.y = 273;
+  difficultyText.font = "Roboto";
+  difficultyText.textSize = 24;
 
   // opening screen setup
   splashScreen.introMusic = cheers;
@@ -103,9 +123,17 @@ void draw() {
     splashScreen.show();
     startButton.x = 220;
     startButton.y = 250;
+    advancedDifficultyButton.x = 330;
+    advancedDifficultyButton.y = 250;
     startButton.draw();
+    advancedDifficultyButton.draw();
     startText.draw();
+    difficultyText.draw();
     if (startButton.pointInShape(mouseX, mouseY) && mousePressed) {
+      openingScreenSensor = true;
+      return;
+    } else if (advancedDifficultyButton.pointInShape(mouseX,mouseY) && mousePressed) {
+      difficultyChanger();
       openingScreenSensor = true;
       return;
     }
@@ -200,4 +228,7 @@ Hexagon createStar(int x, int y, color brush) { // Creates a star at a specific 
   s.penThickness = 4;
   s.brush = brush;
   return s;
+}
+
+void difficultyChanger() {
 }
