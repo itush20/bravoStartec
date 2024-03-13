@@ -23,8 +23,8 @@ int roseSpacing = 0;
 float score = 0;
 float roseCaughtScore = 0.5;
 float roseFellScore = 1.0;
-boolean openingScreenSensor = false;
-
+boolean openingScreenSensor = false; // Change to true to disable opening screen
+boolean disableBackground = false; // The background drawing is slowing our game! Change to true to disable the background.
 
 void setup() {
   size(1024, 512);
@@ -110,7 +110,7 @@ void draw() {
     }
   }
   else {
-    bg.draw();
+    if (!disableBackground) bg.draw();
   
     // winning
     if (score >= 4.0F) {
