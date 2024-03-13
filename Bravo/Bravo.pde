@@ -2,7 +2,7 @@
 Bravo by Shahar and Itamar
  
  TODOS:
- * speed setting and start button
+ * Add difficulties.
  */
 
 // object setup
@@ -21,7 +21,7 @@ Music cheers = new Music();
 PImage background;
 
 // parameter setup
-int roseSpacing = 0;
+int roseDelay = 50;
 float score = 0;
 float roseCaughtScore = 0.5;
 float roseFellScore = 1.0;
@@ -38,7 +38,6 @@ void setup() {
     bg.width = width;
     bg.height = height;
   } else background = loadImage("theater_resized.png");
-  roseSpacing = 50;
 
   // buttons
   startButton.height = 30;
@@ -125,7 +124,7 @@ void draw() {
     }
 
     // generating roses
-    if (frameCount%roseSpacing == 0) {
+    if (frameCount%roseDelay == 0) {
       if (roses.size() == 10) {
         roses.clear();
       }
