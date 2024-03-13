@@ -3,6 +3,7 @@ Bravo by Shahar and Itamar
  
 TODOS:
  * Add difficulties.
+ * The rose fall score system is bugged.
  */
 
 // object setup
