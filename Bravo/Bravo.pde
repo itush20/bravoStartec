@@ -3,7 +3,6 @@ Bravo by Shahar and Itamar
  
 TODOS:
  * Add difficulties.
- * The rose fall score system is bugged.
  */
 
 // object setup
@@ -141,14 +140,17 @@ void draw() {
       if (actor.pointInShape(rose.x, rose.y)) {
         roses.remove(i);
         score += roseCaughtScore;
-        if (score >= 1) stars[int(score) - 1].brush = color(255, 255, 0);
+        int starNum = int(score) - 1;
+        if (starNum >= 0) stars[starNum].brush = color(255, 255, 0);
       }
 
       // rose fell
       if (rose.y >= height) {
         roses.remove(i);
+        int starNum = int(score) - 1;
+        if (starNum >= 0) stars[starNum].brush = color(125);
         score -= roseFellScore;
-        stars[int(score)].brush = color(125);
+        
       }
 
       rose.draw();
