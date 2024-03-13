@@ -1,9 +1,9 @@
-/*
+/* //<>// //<>// //<>// //<>//
 Bravo by Shahar and Itamar
-
-TODOS:
-* speed setting and start button
-*/
+ 
+ TODOS:
+ * speed setting and start button
+ */
 
 // object setup
 Rect startButton = new Rect();
@@ -18,46 +18,49 @@ Text loseText = new Text();
 Text startText = new Text();
 Music cheers = new Music();
 
+PImage background;
+
 // parameter setup
 int roseSpacing = 0;
 float score = 0;
 float roseCaughtScore = 0.5;
 float roseFellScore = 1.0;
 boolean openingScreenSensor = false; // Change to true to disable opening screen
-boolean disableBackground = false; // The background drawing is slowing our game! Change to true to disable the background.
+boolean useProcessingBackground = true; // Use Processing backgound(img) instead of bg.draw() because of lags.
 
 void setup() {
   size(1024, 512);
   rose.setImage("rose.png");
   actor.setImage("actor.png");
-  
-  bg.setImage("bg_theater.png");
-  bg.width = width;
-  bg.height = height;
-  
+
+  if (!useProcessingBackground) {
+    bg.setImage("bg_theater.png");
+    bg.width = width;
+    bg.height = height;
+  } else background = loadImage("theater_resized.png");
   roseSpacing = 50;
-  
+
   // buttons
   startButton.height = 30;
   startButton.width = 80;
-  startButton.brush = color(255,0,0);
+  startButton.brush = color(255, 0, 0);
   startButton.pen = color(255);
   startButton.penThickness = 3;
-  
-  
+
+
   // actor setup
   actor.x = 300;
   actor.y = 200;
   actor.width = 200;
   actor.height = 150;
-  
+
   // stars setup
   stars[0] = createStar(30, 100, color(125));
   stars[1] = createStar(30, 130, color(125));
   stars[2] = createStar(30, 160, color(125));
   stars[3] = createStar(30, 190, color(125));
   cheers.load("cheers.mp3");
-  
+
   // win text setup
   winText.brush = color(255);
   winText.text = "You Won!\nCongradulations!\n ~By Shahar & Itamar";
@@ -65,7 +68,7 @@ void setup() {
   winText.y = height / 2 - 50;
   winText.font = "Roboto";
   winText.textSize = 38;
-  
+
   // lose text setup
   loseText.brush = color(255);
   loseText.text = "You Lost Bro\nYou Are Not Prawn Ready Anymore";
@@ -73,7 +76,7 @@ void setup() {
   loseText.y = height / 2 - 50;
   loseText.font = "Roboto";
   loseText.textSize = 38;
-  
+
   // start text setup
   startText.brush = color(255);
   startText.text = "Start";
@@ -81,18 +84,15 @@ void setup() {
   startText.y = 273;
   startText.font = "Roboto";
   startText.textSize = 24;
-  
+
   // opening screen setup
   splashScreen.introMusic = cheers;
   splashScreen.image = "actor.png";
-  splashScreen.backgroundColor = color(255,0,0);
+  splashScreen.backgroundColor = color(255, 0, 0);
   splashScreen.gameName = "bravo!";
   splashScreen.gameAuthor1 = "Itamar";
   splashScreen.gameAuthor2 = "Shahar";
   splashScreen.gameAuthor3 = "";
-  
-
-  
 }
 
 void draw() {
@@ -104,26 +104,26 @@ void draw() {
     startButton.y = 250;
     startButton.draw();
     startText.draw();
-    if (startButton.pointInShape(mouseX,mouseY) && mousePressed) {
+    if (startButton.pointInShape(mouseX, mouseY) && mousePressed) {
       openingScreenSensor = true;
       return;
     }
-  }
-  else {
-    if (!disableBackground) bg.draw();
-  
+  } else {
+    if (useProcessingBackground) background(background);
+    else bg.draw();
+
     // winning
     if (score >= 4.0F) {
-      winText.draw(); //<>//
+      winText.draw();
       return;
     }
-    
+
     // losing
     if (score < 0.0F) {
-      loseText.draw(); //<>//
+      loseText.draw();
       return;
     }
-    
+
     // generating roses
     if (frameCount%roseSpacing == 0) {
       if (roses.size() == 10) {
@@ -131,30 +131,30 @@ void draw() {
       }
       roses.add(RoseGenerator());
     }
-    
-    
+
+
     // Rose drawing and score system.
     for (int i = 0; i < roses.size(); i++) {
       Image rose = roses.get(i);
-      
+
       // rose caught
       if (actor.pointInShape(rose.x, rose.y)) {
         roses.remove(i);
-        score += roseCaughtScore; //<>//
-        if (score >= 1) stars[int(score) - 1].brush = color(255,255, 0);
+        score += roseCaughtScore;
+        if (score >= 1) stars[int(score) - 1].brush = color(255, 255, 0);
       }
-      
+
       // rose fell
       if (rose.y >= height) {
         roses.remove(i);
-        score -= roseFellScore; //<>//
+        score -= roseFellScore;
         stars[int(score)].brush = color(125);
       }
-      
+
       rose.draw();
     }
     actor.draw();
-    
+
     // stars
     for (Hexagon star : stars) {
       star.draw();
@@ -167,7 +167,7 @@ void mouseMoved() { // Move the actor if the mouse is moved or dragged.
   actor.x = mouseX - 75;
 }
 
-void mouseDragged(){
+void mouseDragged() {
   mouseMoved();
 }
 
@@ -192,7 +192,7 @@ Hexagon createStar(int x, int y, color brush) { // Creates a star at a specific 
   s.y = y;
   s.radius = 25;
   s.rotation = -17.5;
-  s.pen = color(255,255,0);
+  s.pen = color(255, 255, 0);
   s.penThickness = 4;
   s.brush = brush;
   return s;
