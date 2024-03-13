@@ -3,7 +3,7 @@
 /***  NITZ Version 13D                   ***/
 /********************************************/
 /********************************************/
-
+// This version of NITZ is modified that the class Hexagon draws Stars and not hexagons.
 
 
 /********************************************/

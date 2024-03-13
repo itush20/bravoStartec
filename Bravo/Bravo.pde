@@ -1,13 +1,13 @@
 // TODO: speed settings and start button
 // TODO: fix 4 stars dont give win
 
-// obgect setup
-Rect button = new Rect();
+// object setup
+Rect startButton = new Rect();
 Image bg = new Image();
 Image rose = new Image();
 ArrayList<Image> roses = new ArrayList<Image>();
 Hexagon[] stars = new Hexagon[4];
-SplashScreen screen = new SplashScreen();
+SplashScreen splashScreen = new SplashScreen();
 Image actor = new Image();
 Text winText = new Text();
 Text loseText = new Text();
@@ -34,11 +34,11 @@ void setup() {
   roseSpacing = 50;
   
   // buttons
-  button.height = 30;
-  button.width = 80;
-  button.brush = color(255,0,0);
-  button.pen = color(255);
-  button.penThickness = 3;
+  startButton.height = 30;
+  startButton.width = 80;
+  startButton.brush = color(255,0,0);
+  startButton.pen = color(255);
+  startButton.penThickness = 3;
   
   
   // actor setup
@@ -79,27 +79,28 @@ void setup() {
   startText.textSize = 24;
   
   // opening screen setup
-  screen.introMusic = cheers;
-  screen.image = "actor.png";
-  screen.backgroundColor = color(255,0,0);
-  screen.gameName = "bravo!";
-  screen.gameAuthor1 = "Itamar";
-  screen.gameAuthor2 = "Shahar";
-  screen.gameAuthor3 = "";
+  splashScreen.introMusic = cheers;
+  splashScreen.image = "actor.png";
+  splashScreen.backgroundColor = color(255,0,0);
+  splashScreen.gameName = "bravo!";
+  splashScreen.gameAuthor1 = "Itamar";
+  splashScreen.gameAuthor2 = "Shahar";
+  splashScreen.gameAuthor3 = "";
   
 
   
 }
 
 void draw() {
+  // MAIN LOGIC
   // the opening screen
-  if (!openingScreenSensor) {
-    screen.show();
-    button.x = 220;
-    button.y = 250;
-    button.draw();
+  if (!openingScreenSensor) { // Show opening screen until the start button is pressed
+    splashScreen.show();
+    startButton.x = 220;
+    startButton.y = 250;
+    startButton.draw();
     startText.draw();
-    if (button.pointInShape(mouseX,mouseY) && mousePressed) {
+    if (startButton.pointInShape(mouseX,mouseY) && mousePressed) {
       openingScreenSensor = true;
       return;
     }
@@ -118,6 +119,7 @@ void draw() {
       loseText.draw();
       return;
     }
+    
     // generating roses
     if (frameCount%roseSpacing == 0) {
       if (roses.size() == 10) {
@@ -127,7 +129,7 @@ void draw() {
     }
     
     
-    
+    // Rose drawing and score system.
     for (int i = 0; i < roses.size(); i++) {
       Image rose = roses.get(i);
       
@@ -156,7 +158,8 @@ void draw() {
   }
 }
 
-void mouseMoved() {
+
+void mouseMoved() { // Move the actor if the mouse is moved or dragged.
   actor.x = mouseX - 75;
 }
 
@@ -164,7 +167,7 @@ void mouseDragged(){
   mouseMoved();
 }
 
-Image RoseGenerator() {
+Image RoseGenerator() { // Generates a new rose in a random location and returns its Image object
   int roseY = -50;
   int roseX = int(random(624)) + 200;
   Image rose = new Image();
@@ -179,7 +182,7 @@ Image RoseGenerator() {
   return rose;
 } 
 
-Hexagon createStar(int x, int y, color brush) {
+Hexagon createStar(int x, int y, color brush) { // Creates a star at a specific location
   Hexagon s = new Hexagon();
   s.x = x;
   s.y = y;
