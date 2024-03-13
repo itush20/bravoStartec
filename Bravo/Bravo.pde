@@ -22,11 +22,13 @@ PImage background;
 
 // parameter setup
 int roseDelay = 50;
-float score = 0;
+int roseSpeed = 5;
 float roseCaughtScore = 0.5;
 float roseFellScore = 1.0;
 boolean openingScreenSensor = false; // Change to true to disable opening screen
 boolean useProcessingBackground = true; // Use Processing backgound(img) instead of bg.draw() because of lags.
+
+float score = 0;
 
 void setup() {
   size(1024, 512);
@@ -182,7 +184,7 @@ Image RoseGenerator() { // Generates a new rose in a random location and returns
   rose.x = roseX;
   rose.width = 150;
   rose.height = 100;
-  rose.speed = 5;
+  rose.speed = roseSpeed;
   rose.direction = Direction.DOWN;
   rose.rotation = 90;
   return rose;
