@@ -1,5 +1,9 @@
-// TODO: speed settings and start button
-// TODO: fix 4 stars dont give win
+/*
+Bravo by Shahar and Itamar
+
+TODOS:
+* speed setting and start button
+*/
 
 // object setup
 Rect startButton = new Rect();
@@ -110,13 +114,13 @@ void draw() {
   
     // winning
     if (score >= 4.0F) {
-      winText.draw();
+      winText.draw(); //<>//
       return;
     }
     
     // losing
     if (score < 0.0F) {
-      loseText.draw();
+      loseText.draw(); //<>//
       return;
     }
     
@@ -136,15 +140,15 @@ void draw() {
       // rose caught
       if (actor.pointInShape(rose.x, rose.y)) {
         roses.remove(i);
-        stars[int(score)].brush = color(255,255, 0);
-        score += roseCaughtScore;
+        score += roseCaughtScore; //<>//
+        if (score >= 1) stars[int(score) - 1].brush = color(255,255, 0);
       }
       
       // rose fell
       if (rose.y >= height) {
         roses.remove(i);
+        score -= roseFellScore; //<>//
         stars[int(score)].brush = color(125);
-        score -= roseFellScore;
       }
       
       rose.draw();
