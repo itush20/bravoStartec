@@ -1,7 +1,7 @@
 /* //<>// //<>// //<>// //<>//
 Bravo by Shahar and Itamar
  
- TODOS:
+TODOS:
  * Add difficulties.
  */
 
